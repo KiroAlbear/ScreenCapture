@@ -1,6 +1,7 @@
 package com.truiton.screencapture;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode != REQUEST_CODE) {
@@ -133,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void shareScreen() {
         if (mMediaProjection == null) {
             startActivityForResult(mProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
@@ -142,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         mMediaRecorder.start();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private VirtualDisplay createVirtualDisplay() {
         return mMediaProjection.createVirtualDisplay("MainActivity",
                 DISPLAY_WIDTH, DISPLAY_HEIGHT, mScreenDensity,
@@ -172,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private class MediaProjectionCallback extends MediaProjection.Callback {
         @Override
         public void onStop() {
@@ -186,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void stopScreenSharing() {
         if (mVirtualDisplay == null) {
             return;
@@ -202,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         destroyMediaProjection();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void destroyMediaProjection() {
         if (mMediaProjection != null) {
             mMediaProjection.unregisterCallback(mMediaProjectionCallback);
